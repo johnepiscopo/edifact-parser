@@ -1,8 +1,11 @@
-package main
+package ediwriter
 
 import (
 	"fmt"
 	"strings"
+
+	"github.com/johnepiscopo/edifactParser/common"
+	"github.com/johnepiscopo/edifactParser/edisegments"
 )
 
 //EdiWriter creates an EDIFact file
@@ -23,7 +26,7 @@ func (e *EdiWriter) GetFile() string {
 
 func (e *EdiWriter) WriteSegment(segmentCode string, data map[string]string, elementsToIgnore []string) {
 
-	segment := Segments[segmentCode]
+	segment := edisegments.Segments[segmentCode]
 	if segment == nil {
 		return
 	}
@@ -48,7 +51,7 @@ func (e *EdiWriter) WriteSegment(segmentCode string, data map[string]string, ele
 
 	s := possiblyTrimEnd(b.String())
 
-	e.file = append(e.file, fmt.Sprintf("%s%s", s, TERMINATOR))
+	e.file = append(e.file, fmt.Sprintf("%s%s", s, common.TERMINATOR))
 }
 
 func possiblyTrimEnd(str string) string {
