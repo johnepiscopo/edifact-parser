@@ -1,4 +1,4 @@
-package edifactparser
+package main
 
 func main() {
 
