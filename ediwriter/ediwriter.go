@@ -24,11 +24,11 @@ func (e *EdiWriter) GetFile() string {
 	return sb.String()
 }
 
-func (e *EdiWriter) WriteSegment(segmentCode string, data map[string]string, elementsToIgnore []string) {
+func (e *EdiWriter) WriteSegment(segmentCode string, data map[string]string, elementsToIgnore []string) error {
 
 	segment := edisegments.Segments[segmentCode]
 	if segment == nil {
-		return
+		return edisegments.NewSegmentError(segmentCode)
 	}
 
 	var b strings.Builder
@@ -52,6 +52,8 @@ func (e *EdiWriter) WriteSegment(segmentCode string, data map[string]string, ele
 	s := possiblyTrimEnd(b.String())
 
 	e.file = append(e.file, fmt.Sprintf("%s%s", s, common.TERMINATOR))
+
+	return nil
 }
 
 func possiblyTrimEnd(str string) string {

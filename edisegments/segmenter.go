@@ -1,5 +1,7 @@
 package edisegments
 
+import "fmt"
+
 //Segmenter is the interface defining the contract
 //for each of the EDI Segments
 type Segmenter interface {
@@ -14,4 +16,20 @@ var Segments = map[string]Segmenter{
 	"DTM": NewDTMModel(),
 	"RFF": NewRFFModel(),
 	"NAD": NewNADModel(),
+	"TDT": NewTDTModel(),
+	"LOC": NewLOCModel(),
+}
+
+//SegmentError is a placeholder comment
+type SegmentError struct {
+	segmentCode string
+}
+
+func (s *SegmentError) Error() string {
+	return fmt.Sprintf("%s is not a valid segment", s.segmentCode)
+}
+
+//NewSegmentError returns a new segment error object
+func NewSegmentError(segmentCode string) error {
+	return &SegmentError{segmentCode: segmentCode}
 }
