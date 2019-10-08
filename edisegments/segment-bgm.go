@@ -8,10 +8,10 @@ type BGMModel struct {
 func NewBGMModel() *BGMModel {
 	m := new(BGMModel)
 	m.elements = []string{
-		"MessageName",
-		"MessageNameCoded",
-		"MessageNumber",
-		"MessageFunctionCoded",
+		"MessageName",          //Ref: BGM010 	 Tag: C002
+		"MessageNameCoded",     //Ref: BGM010-010 	 Tag: 1001
+		"MessageNumber",        //Ref: BGM020 Tag: 1004
+		"MessageFunctionCoded", //Ref: BGM030 Tag: 1225
 	}
 
 	m.separators = map[string]string{
