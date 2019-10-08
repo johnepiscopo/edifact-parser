@@ -11,4 +11,7 @@ type Segmenter interface {
 var Segments = map[string]Segmenter{
 	"UNH": NewUNHModel(),
 	"BGM": NewBGMModel(),
+	"DTM": NewDTMModel(),
+	"RFF": NewRFFModel(),
+	"NAD": NewNADModel(),
 }
