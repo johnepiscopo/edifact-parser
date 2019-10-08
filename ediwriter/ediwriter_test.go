@@ -181,3 +181,83 @@ func Test_LOCSegmentCreated(t *testing.T) {
 
 	assert.Equal(t, "LOC+103+CENTRAL WAREHOUSE'\n", s)
 }
+
+func Test_CPSSegmentCreated(t *testing.T) {
+	segmentCode := "CPS"
+
+	data := map[string]string{
+		"SegmentName":         "CPS",
+		"HierachicalIDNumber": "1",
+		"HierachicalParentId": "",
+		"PackagingLevelCoded": "4",
+	}
+
+	ignore := []string{}
+
+	e := new(EdiWriter)
+
+	e.WriteSegment(segmentCode, data, ignore)
+
+	s := e.GetFile()
+	fmt.Println(s)
+
+	assert.Equal(t, "CPS+1++4'\n", s)
+}
+
+func Test_PACSegmentCreated(t *testing.T) {
+	segmentCode := "PAC"
+
+	type testStruct struct {
+		data     map[string]string
+		ignore   []string
+		expected string
+	}
+
+	t1 := testStruct{
+		data: map[string]string{
+			"SegmentName":                     "PAC",
+			"NoOfPackages":                    "",
+			"PackagingDetails":                "",
+			"PackagingLevelCoded":             "3",
+			"PackagingRelatedDescriptionCode": "52",
+			"PackageType":                     "CARTON",
+			"PackagesIdentification":          "CAR10N",
+		},
+		ignore: []string{
+			"PackagingDetails",
+			"PackagesIdentification",
+		},
+		expected: "PAC++3:52+CARTON'\n",
+	}
+
+	t2 := testStruct{
+		data: map[string]string{
+			"SegmentName":  "PAC",
+			"NoOfPackages": "1",
+		},
+		ignore: []string{
+			"PackagingDetails",
+			"PackagingLevelCoded",
+			"PackagingRelatedDescriptionCode",
+			"PackageType",
+			"PackagesIdentification",
+		},
+		expected: "PAC+1'\n",
+	}
+
+	testcases := []testStruct{
+		t1, t2,
+	}
+
+	for _, testcase := range testcases {
+		e := new(EdiWriter)
+
+		e.WriteSegment(segmentCode, testcase.data, testcase.ignore)
+
+		s := e.GetFile()
+		fmt.Println(s)
+
+		assert.Equal(t, testcase.expected, s, fmt.Sprintf("Got %s Expected %s", testcase.expected, s))
+	}
+
+}

@@ -18,6 +18,8 @@ var Segments = map[string]Segmenter{
 	"NAD": NewNADModel(),
 	"TDT": NewTDTModel(),
 	"LOC": NewLOCModel(),
+	"CPS": NewCPSModel(),
+	"PAC": NewPACModel(),
 }
 
 //SegmentError is a placeholder comment
