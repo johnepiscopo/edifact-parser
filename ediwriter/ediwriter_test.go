@@ -4,31 +4,29 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/johnepiscopo/edifactParser/edisegments"
 	"github.com/stretchr/testify/assert"
 )
 
-func Test_InvalidSegmentReturnsError(t *testing.T) {
-	segmentCode := "D'OH"
+// func Test_InvalidSegmentReturnsError(t *testing.T) {
+// 	segmentCode := "D'OH"
 
-	data := map[string]string{}
-	ignore := []string{}
+// 	data := map[string]string{}
+// 	ignore := []string{}
 
-	e := new(EdiWriter)
+// 	e := new(EdiWriter)
 
-	err := e.WriteSegment(segmentCode, data, ignore)
+// 	err := e.WriteSegment(segmentCode, data, ignore)
 
-	assert.NotNil(t, err, "Err is nil")
-	assert.IsType(t, &edisegments.SegmentError{}, err, fmt.Sprintf("Expected type edisegments.SegmentError Got %T", err))
-	assert.Equal(t, "D'OH is not a valid segment", err.Error())
-}
+// 	assert.NotNil(t, err, "Err is nil")
+// 	assert.IsType(t, &edisegments.SegmentError{}, err, fmt.Sprintf("Expected type edisegments.SegmentError Got %T", err))
+// 	assert.Equal(t, "D'OH is not a valid segment", err.Error())
+// }
 
 func Test_UNHSegmentCreated(t *testing.T) {
 	segmentCode := "UNH"
 
 	data := map[string]string{
-		"MessageReferenceNumber":   "UNH",
-		"MessageIdentifier":        "123456",
+		"MessageReferenceNumber":   "123456",
 		"MessageTypeIdentifier":    "DESADV",
 		"MessageTypeVersionNumber": "D",
 		"MessageTypeReleaseNumber": "96A",
@@ -54,7 +52,6 @@ func Test_BGMSegmentCreated(t *testing.T) {
 	segmentCode := "BGM"
 
 	data := map[string]string{
-		"MessageName":          "BGM",
 		"MessageNameCoded":     "351",
 		"MessageNumber":        "012345",
 		"MessageFunctionCoded": "9",
@@ -76,7 +73,6 @@ func Test_DTMSegmentCreated(t *testing.T) {
 	segmentCode := "DTM"
 
 	data := map[string]string{
-		"DateTimePeriod":                "DTM",
 		"DateTimePeriodQualifier":       "137",
 		"DateTimePeriodValue":           "20081001",
 		"DateTimePeriodFormatQualifier": "102",
@@ -98,7 +94,6 @@ func Test_NADSegmentCreated(t *testing.T) {
 	segmentCode := "NAD"
 
 	data := map[string]string{
-		"NameAndAddressIdentifier":   "NAD",
 		"PartyQualifier":             "BY",
 		"PartyIdentificationDetails": "123456",
 		"PartyIdIdentification":      "160",
@@ -121,7 +116,6 @@ func Test_RFFSegmentCreated(t *testing.T) {
 	segmentCode := "RFF"
 
 	data := map[string]string{
-		"Reference":          "RFF",
 		"ReferenceQualifier": "PK",
 		"ReferenceNumber":    "123456",
 	}
@@ -142,7 +136,6 @@ func Test_TDTSegmentCreated(t *testing.T) {
 	segmentCode := "TDT"
 
 	data := map[string]string{
-		"Carrier":                       "TDT",
 		"CarrierIdentification":         "UPSN",
 		"CodeListIdentificationCode":    "172",
 		"CodeListResponsibleAgencyCode": "",

@@ -1,10 +1,8 @@
 package ediwriter
 
 import (
-	"fmt"
 	"strings"
 
-	"github.com/johnepiscopo/edifactParser/common"
 	"github.com/johnepiscopo/edifactParser/edisegments"
 )
 
@@ -26,46 +24,13 @@ func (e *EdiWriter) GetFile() string {
 
 func (e *EdiWriter) WriteSegment(segmentCode string, data map[string]string, elementsToIgnore []string) error {
 
-	segment := edisegments.Segments[segmentCode]
-	if segment == nil {
-		return edisegments.NewSegmentError(segmentCode)
+	segment := edisegments.Segments[strings.ToUpper(segmentCode)]
+
+	for key, value := range data {
+		segment.SetValueByName(key, value)
 	}
 
-	var b strings.Builder
-
-	for _, element := range segment.GetElements() {
-		toIgnore := false
-		for _, i := range elementsToIgnore {
-			if i == element {
-				toIgnore = true
-				break
-			}
-		}
-
-		if toIgnore {
-			continue
-		}
-
-		b.WriteString(fmt.Sprintf("%s%s", data[element], segment.GetSeparator(element)))
-	}
-
-	s := possiblyTrimEnd(b.String())
-
-	e.file = append(e.file, fmt.Sprintf("%s%s", s, common.TERMINATOR))
+	e.file = append(e.file, segment.String())
 
 	return nil
-}
-
-func possiblyTrimEnd(str string) string {
-	chars := []string{
-		"+",
-		":",
-		"?",
-	}
-
-	for _, c := range chars {
-		str = strings.TrimSuffix(str, c)
-	}
-
-	return str
 }
