@@ -82,6 +82,23 @@ func (e *EdiSegment) SetValueByRef(ref, value string) error {
 	return fmt.Errorf("%s is not a valid ref for this segment", ref)
 }
 
+func (e *EdiSegment) GetValueByName(name string) string {
+
+	for _, ele := range e.Elements {
+		if ele.Name == name {
+			return ele.Value
+		}
+
+		for _, sub := range ele.SubElements {
+			if sub.Name == name {
+				return sub.Value
+			}
+		}
+	}
+
+	return ""
+}
+
 func (e *EdiSegment) String() string {
 	var sb strings.Builder
 

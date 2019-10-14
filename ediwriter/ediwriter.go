@@ -25,7 +25,7 @@ func (e *EdiWriter) GetFile() string {
 func (e *EdiWriter) WriteSegment(segmentCode string, data map[string]string, elementsToIgnore []string) error {
 
 	segment := edisegments.Segments[strings.ToUpper(segmentCode)]
-
+	segment.ElementsToIgnore = elementsToIgnore
 	for key, value := range data {
 		segment.SetValueByName(key, value)
 	}

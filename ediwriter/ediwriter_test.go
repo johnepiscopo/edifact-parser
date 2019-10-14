@@ -158,8 +158,7 @@ func Test_LOCSegmentCreated(t *testing.T) {
 	segmentCode := "LOC"
 
 	data := map[string]string{
-		"LocationQualifier":       "LOC",
-		"LocationIdentifier":      "103",
+		"LocationQualifier":       "103",
 		"PlaceLocationIdentifier": "CENTRAL WAREHOUSE",
 	}
 
@@ -217,7 +216,7 @@ func Test_PACSegmentCreated(t *testing.T) {
 			"PackagesIdentification":          "CAR10N",
 		},
 		ignore: []string{
-			"PackagingDetails",
+			//"PackagingDetails",
 			"PackagesIdentification",
 		},
 		expected: "PAC++3:52+CARTON'\n",
